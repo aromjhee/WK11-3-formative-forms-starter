@@ -46,7 +46,7 @@ const validateFields = (req, res, next) => {
 app.post("/create", csrfProtection, validateFields, (req, res) => {
   const { firstName, lastName, email, password, confirmedPassword } = req.body;
   const errors = req.errors;
-  
+
   if (errors.length > 0) {
     res.render("create", {
       title: "Create a user",
@@ -62,6 +62,39 @@ app.post("/create", csrfProtection, validateFields, (req, res) => {
 
   res.redirect("/");
 })
+
+app.get("/create-interesting", csrfProtection, (req, res) => {
+  res.render("create-interesting", {
+    title: "Creating an interesting user", 
+    messages: [],
+    csrfToken: req.csrfToken()
+  });
+});
+
+app.post("/create-interesting", csrfProtection, validateFields, (req, res) => {
+  const { 
+    firstName, 
+    lastName, 
+    email, 
+    favoriteBeetle,
+    iceCream,
+    age
+   } = req.body;
+
+  const errors = req.errors.concat(validateFields);
+
+  if (errors.length > 0) {
+    res.render("create-interesting", {
+      title: "Create an interesting user",
+      ...req.body,
+      csrfToken: req.csrfToken(),
+      messages: erros
+    });
+    return;
+  }
+
+  res.redirect("/");
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 

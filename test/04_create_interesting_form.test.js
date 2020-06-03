@@ -56,8 +56,8 @@ describe("create-interesting", () => {
     expect($("input[type='number'][name='age']").length).to.equal(1);
   });
 
-  it("renders a select dropdown for favoriteBeatle", () => {
-    expect($("select[name='favoriteBeatle']").length).to.equal(1);
+  it("renders a select dropdown for favoriteBeetle", () => {
+    expect($("select[name='favoriteBeetle']").length).to.equal(1);
     expect($("option[value='']").text()).to.equal(
       "--Please choose an option--"
     );
