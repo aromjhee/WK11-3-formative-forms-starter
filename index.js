@@ -29,7 +29,7 @@ app.get("/create", csrfProtection, (req, res) => {
   });
 });
 
-const validateFields = (req, res, next) => {
+const validateFields1 = (req, res, next) => {
   const errors = [];
   const { firstName, lastName, email, password, confirmedPassword } = req.body;
 
@@ -43,7 +43,29 @@ const validateFields = (req, res, next) => {
   next();
 }
 
-app.post("/create", csrfProtection, validateFields, (req, res) => {
+const validateFields2 = (req, res, next) => {
+  const messages = [];
+  const { age, favoriteBeetle } = req.body;
+  const intAge = parseInt(age, 10);
+
+  if (!age) messages.push("age is required")
+
+  if ((typeof (intAge) !== "number") || Number.isNaN(intAge)) messages.push("age must be a valid age");
+
+  if (intAge < 0 || intAge > 120) messages.push("age must be a valid age");
+
+  if (!favoriteBeetle) messages.push("favoriteBeetle is required");
+  console.log("favoriteBeetle:", favoriteBeetle);
+
+  if (
+    !["John", "Paul", "Ringo", "George"].includes(favoriteBeetle)
+    ) messages.push("favoriteBeetle must be a real Beetle member");
+
+  req.messages = messages;
+  next();
+}
+
+app.post("/create", csrfProtection, validateFields1, (req, res) => {
   const { firstName, lastName, email, password, confirmedPassword } = req.body;
   const errors = req.errors;
 
@@ -60,6 +82,7 @@ app.post("/create", csrfProtection, validateFields, (req, res) => {
     return;
   }
 
+  users.push({ id: users.length + 1, firstName, lastName, email });
   res.redirect("/");
 })
 
@@ -71,7 +94,7 @@ app.get("/create-interesting", csrfProtection, (req, res) => {
   });
 });
 
-app.post("/create-interesting", csrfProtection, validateFields, (req, res) => {
+app.post("/create-interesting", csrfProtection, validateFields1, validateFields2, (req, res) => {
   const { 
     firstName, 
     lastName, 
@@ -81,18 +104,26 @@ app.post("/create-interesting", csrfProtection, validateFields, (req, res) => {
     age
    } = req.body;
 
-  const errors = req.errors.concat(validateFields);
+  const errors = req.errors.concat(req.messages);
 
   if (errors.length > 0) {
     res.render("create-interesting", {
       title: "Create an interesting user",
       ...req.body,
       csrfToken: req.csrfToken(),
-      messages: erros
+      messages: errors
     });
     return;
   }
-
+  users.push({
+    id: users.length + 1,
+    firstName,
+    lastName,
+    email,
+    favoriteBeetle,
+    iceCream: iceCream === "on",
+    age
+  });
   res.redirect("/");
 });
 

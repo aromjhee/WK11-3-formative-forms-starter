@@ -119,7 +119,7 @@ describe("submit-interesting", () => {
     password: "abcdefg2",
     confirmedPassword: "abcdefg2",
     age: 30,
-    favoriteBeatle: "John",
+    favoriteBeetle: "John",
     iceCream: "on"
   };
 
@@ -171,35 +171,35 @@ describe("submit-interesting", () => {
     });
   });
 
-  describe("favoriteBeatle field", () => {
-    it("renders an error message if favoriteBeatle is not submitted", async () => {
+  describe("favoriteBeetle field", () => {
+    it("renders an error message if favoriteBeetle is not submitted", async () => {
       await submit({
         ...formData,
-        favoriteBeatle: null
+        favoriteBeetle: null
       });
       const messages = $("li");
-      expect(messages.eq(0).text()).to.equal("favoriteBeatle is required");
+      expect(messages.eq(0).text()).to.equal("favoriteBeetle is required");
     });
 
-    it("renders an error message if favoriteBeatle is not a valid member of the Beatles", async () => {
+    it("renders an error message if favoriteBeetle is not a valid member of the Beatles", async () => {
       await submit({
         ...formData,
-        favoriteBeatle: "Scooby-Doo"
+        favoriteBeetle: "Scooby-Doo"
       });
       const messages = $("li");
       expect(messages.eq(0).text()).to.equal(
-        "favoriteBeatle must be a real Beatle member"
+        "favoriteBeetle must be a real Beetle member"
       );
     });
 
-    it("marks the submitted favoriteBeatle value as 'selected'", async () => {
+    it("marks the submitted favoriteBeetle value as 'selected'", async () => {
       await submit({
         ...formData,
         email: null
       });
 
       expect($("option[selected='selected']").attr("value")).to.equal(
-        formData.favoriteBeatle
+        formData.favoriteBeetle
       );
     });
   });
@@ -232,7 +232,7 @@ describe("submit-interesting", () => {
 
       $ = cheerio.load(homeRes.text);
       const lastRowCells = $("tr:last-child td");
-      // id colummn:
+      // id column:
       expect(lastRowCells.eq(0).text()).to.equal(
         $("tbody tr").length.toString()
       );
@@ -249,8 +249,8 @@ describe("submit-interesting", () => {
       // age column:
       expect(lastRowCells.eq(4).text()).to.equal(formData.age.toString());
 
-      // favoriteBeatle column:
-      expect(lastRowCells.eq(5).text()).to.equal(formData.favoriteBeatle);
+      // favoriteBeetle column:
+      expect(lastRowCells.eq(5).text()).to.equal(formData.favoriteBeetle);
 
       // likes iceCream column:
       expect(lastRowCells.eq(6).text()).to.equal("true");

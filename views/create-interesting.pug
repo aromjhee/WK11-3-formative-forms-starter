@@ -1,11 +1,11 @@
 extends layout.pug
 
 mixin option(value, text)
-  option(value=value selected=(value === favoriteBeatle)) #{text}
+  option(value=value selected=(value === favoriteBeetle)) #{text}
 
 block content
   h2 #{title}
-  include includes/errors
+  include includes/errors-create-interesting
   form(method="post" action="/create-interesting")
     include includes/form-inputs
     .form-group
