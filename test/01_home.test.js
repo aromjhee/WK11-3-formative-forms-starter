@@ -49,7 +49,7 @@ describe("home", () => {
     expect(tableHeaders.eq(2).text()).to.equal("Last Name");
     expect(tableHeaders.eq(3).text()).to.equal("Email");
     expect(tableHeaders.eq(4).text()).to.equal("Age");
-    expect(tableHeaders.eq(5).text()).to.equal("Favorite Beatle");
+    expect(tableHeaders.eq(5).text()).to.equal("Favorite Beetle");
     expect(tableHeaders.eq(6).text()).to.equal("Likes Ice Cream");
   });
 
