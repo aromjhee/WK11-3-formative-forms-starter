@@ -7,13 +7,23 @@ html
       body {
         padding: 40px;
       }
+      .links-container {
+        display: flex;
+        flex-direction: column;
+      }
+      .form-check {
+        margin-bottom: 20px;
+      }
 
   body
-    div
-      a(href='/') Home
-    div
-      a(href='/create') Add User
-    div
-      a(href='/create-interesting') Create Interesting User
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+      a.navbar-brand(href='/') Home
+      .navbar-nav
+        a.nav-item.nav-link(href='/create') Create User
+        a.nav-item.nav-link(href='/create-interesting') Create Interesting User
+    //- div
+    //-   a(href='/create') Add User
+    //- div
+    //-   a(href='/create-interesting') Create Interesting User
     
     block content

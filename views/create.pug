@@ -1,10 +1,13 @@
 extends layout.pug
 
-mixin form
-  input(type=type)
-
 block content
   h2 #{title}
+  if errors
+    div
+      ul
+        p The following errors were found:
+        each error in errors
+          li #{error}
   form(method="post" action="/create")
     input(type="hidden" name="_csrf" value=csrfToken)
     label(for="firstName") First Name:
@@ -16,5 +19,5 @@ block content
     label(for="password") Password:
     input(type="password" id="password" name="password" value=password)
     label(for="confirmPw") confirmedPassword:
-    input(type="password" id="confirmedPassword" name="confirmedPassword" value=confirmPw)
+    input(type="password" id="confirmedPassword" name="confirmedPassword" value=confirmPassword)
     input(type="submit" value="Create User")
